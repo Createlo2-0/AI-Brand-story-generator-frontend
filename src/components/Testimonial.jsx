@@ -4,7 +4,7 @@ function Testimonial({ img, name, role, text, tags }) {
       <img
         src={img}
         alt={name}
-        className="w-28 h-28 rounded-full object-cover mb-4 border-4 border-white shadow-lg"
+        className="w-30 h-30 rounded-full object-cover mb-4 border-2 border-white shadow-lg"
       />
       <p className="text-white font-semibold mb-1">{name}</p>
       <p className="text-gray-300 text-sm mb-2">{text}</p>

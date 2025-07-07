@@ -3,17 +3,17 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const features = [
   {
-    img: "/f1.jpg",
+    img: `${import.meta.env.BASE_URL}f1.jpg`,
     title: "Interactive Features",
     desc: "Our services focus on enhancing your brand's narrative, engaging your audience, and increasing visibility. From creative storytelling to seamless user experiences, we are committed to helping your brand thrive in the digital landscape.",
   },
   {
-    img: "/f2.jpg",
+    img: `${import.meta.env.BASE_URL}f2.jpg`,
     title: "AI-Powered Storytelling",
     desc: "Leverage advanced AI to craft compelling stories tailored to your brand's voice. Our technology ensures every narrative is unique, engaging, and resonates with your target audience.",
   },
   {
-    img: "/f3.jpg",
+    img: `${import.meta.env.BASE_URL}f3.jpg`,
     title: "Seamless Integration",
     desc: "Integrate our AI solutions effortlessly into your existing workflow. Enjoy a smooth experience that boosts productivity and creativity without disrupting your current processes.",
   },

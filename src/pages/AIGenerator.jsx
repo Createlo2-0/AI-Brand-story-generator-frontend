@@ -26,7 +26,7 @@ export default function AIGenerator() {
           className="relative w-full lg:w-[50%] h-[85vh] rounded-xl overflow-hidden shadow-2xl transition-transform duration-300 ease-in-out group cursor-pointer"
         >
           <img
-            src="/robot-human.jpg"
+            src={`${import.meta.env.BASE_URL}robot-human.jpg`}
             alt="AI Story Generator"
             className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition duration-500"
           />

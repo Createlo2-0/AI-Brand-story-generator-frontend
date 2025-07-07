@@ -72,7 +72,7 @@ export function ContactusSection() {
         { name: "lastname", value: form.lastName },
         { name: "email", value: form.email },
         { name: "phone", value: form.phone },
-        { name: "description", value: form.message },
+        { name: "descriptions", value: form.message },
       ],
     };
 
