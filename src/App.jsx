@@ -9,14 +9,14 @@ export default function App() {
     <Router>
       <div className="min-h-screen text-white flex flex-col items-center">
         <Navbar />
-        <div className="w-full">
+        <div className="w-full flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/ai-generator" element={<AIGenerator />} />
           </Routes>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </Router>
   );
 }

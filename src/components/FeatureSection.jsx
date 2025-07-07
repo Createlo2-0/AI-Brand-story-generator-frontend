@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const features = [
   {
@@ -18,50 +19,93 @@ const features = [
   },
 ];
 
+// Animation variants for the image slider
+const sliderVariants = {
+  incoming: (direction) => ({
+    y: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  active: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+  outgoing: (direction) => ({
+    y: direction > 0 ? "-100%" : "100%",
+    opacity: 0,
+    transition: { duration: 0.3, ease: "easeInOut" },
+  }),
+};
+
+// Animation variants for the text content
+const textVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: "easeIn" } },
+};
+
 function FeatureSection() {
   const [index, setIndex] = useState(0);
-  const [slideDir, setSlideDir] = useState("down");
+  // Use a number for direction: 1 for next, -1 for prev
+  const [direction, setDirection] = useState(1);
 
   const handlePrev = () => {
-    setSlideDir("up");
+    setDirection(-1);
     setIndex((prev) => (prev === 0 ? features.length - 1 : prev - 1));
   };
   const handleNext = () => {
-    setSlideDir("down");
+    setDirection(1);
     setIndex((prev) => (prev === features.length - 1 ? 0 : prev + 1));
   };
 
   return (
     <section className="w-full flex flex-col bg-black md:flex-row items-center justify-center gap-8 md:gap-16 px-4 md:px-12 py-16">
+      {/* Image Container */}
       <div className="flex-shrink-0 w-full max-w-xs md:max-w-sm h-64 md:h-80 flex items-center justify-center overflow-hidden relative">
-        <div
-          key={features[index].img + features[index].title}
-          className={`absolute inset-0 w-full h-full flex items-center justify-center transition-transform duration-500 ease-in-out
-            ${
-              slideDir === "down"
-                ? "animate-slide-in-down"
-                : "animate-slide-in-up"
-            }
-          `}
-        >
-          <div className="w-64 h-64 md:w-80 md:h-80 bg-black flex items-center justify-center rounded-lg shadow-lg overflow-hidden">
-            <img
-              src={features[index].img}
-              alt={features[index].title}
-              className="object-cover w-full h-full"
-              style={{ aspectRatio: "1 / 1" }}
-            />
-          </div>
-        </div>
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={index} // Key is crucial for AnimatePresence
+            custom={direction}
+            variants={sliderVariants}
+            initial="incoming"
+            animate="active"
+            exit="outgoing"
+            className="absolute inset-0 w-full h-full"
+          >
+            <div className="w-full h-full bg-black flex items-center justify-center rounded-lg shadow-lg overflow-hidden">
+              <img
+                src={features[index].img}
+                alt={features[index].title}
+                className="object-cover w-full h-full"
+                style={{ aspectRatio: "1 / 1" }}
+              />
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
-      <div className="flex-1 text-center md:text-left transition-all duration-500">
-        <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-          {features[index].title}
-        </h2>
-        <p className="text-gray-200 mb-6 text-base md:text-lg">
-          {features[index].desc}
-        </p>
-        <div className="flex justify-center md:justify-start gap-4">
+
+      {/* Text Content Container */}
+      <div className="flex-1 text-center md:text-left">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index} // Also key the text content for synchronized animation
+            variants={textVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="transition-all duration-500"
+          >
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              {features[index].title}
+            </h2>
+            <p className="text-gray-200 mb-6 text-base md:text-lg">
+              {features[index].desc}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Controls */}
+        <div className="flex justify-center md:justify-start gap-4 mt-4">
           <button
             className="rounded-full border border-white text-white p-2 hover:bg-white hover:text-black transition"
             onClick={handlePrev}
